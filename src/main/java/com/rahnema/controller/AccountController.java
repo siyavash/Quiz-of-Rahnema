@@ -22,11 +22,16 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
 
-    @PostMapping(path = "register")
+    private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AccountController.class);
+
+    @PostMapping(path = "/register")
     public @ResponseBody
-    Account register(@RequestHeader String androidId) {
-        Account newAccount = new Account(androidId);
-        accountRepository.save(newAccount);
-        return newAccount;
+    AccountDetail register(@RequestHeader String androidId) {
+        Account account = new Account(androidId, new AccountDetail(100L, 0L, 0L, 1L));
+
+        log.info(account.getDetail().getAccount().getId());
+        accountRepository.save(account);
+
+        return account.getDetail();
     }
 }
