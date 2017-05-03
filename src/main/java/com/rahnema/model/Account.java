@@ -14,7 +14,6 @@ public class Account implements Serializable {
     @Column(name = "account_id")
     private Long id;
 
-    @Column(name = "account_detail")
     private AccountDetail detail;
 
     @Column(name = "account_username")
