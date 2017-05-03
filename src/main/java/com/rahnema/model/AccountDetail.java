@@ -25,11 +25,11 @@ public class AccountDetail implements Serializable {
     private Long xp;
 
     @Column(name = "account_level")
-    private int level;
+    private Long level;
 
-    AccountDetail() {}
+    public AccountDetail() {}
 
-    AccountDetail(Long coin, Long gem, Long xp, int level) {
+    public AccountDetail(Long coin, Long gem, Long xp, Long level) {
         this.coin = coin;
         this.gem = gem;
         this.xp = xp;
@@ -72,11 +72,11 @@ public class AccountDetail implements Serializable {
         this.xp = xp;
     }
 
-    public int getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Long level) {
         this.level = level;
     }
 }
