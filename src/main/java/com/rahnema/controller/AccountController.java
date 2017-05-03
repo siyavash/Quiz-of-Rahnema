@@ -4,11 +4,12 @@ import com.rahnema.model.Account;
 import com.rahnema.model.AccountDetail;
 import com.rahnema.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
 
 /**
  * Created by siyavash on 5/3/2017.
@@ -25,11 +26,11 @@ public class AccountController {
 
     @PostMapping(path = "/register")
     public @ResponseBody
-    AccountDetail register(@RequestHeader String androidId) {
+    ResponseEntity register(@RequestHeader String androidId) {
 
         Account account = accountRepository.findByAndroidId(androidId);
 
-        if(accountRepository.findByAndroidId(androidId) == null) {
+        if (accountRepository.findByAndroidId(androidId) == null) {
 
             account = new Account(androidId, new AccountDetail(100L, 0L, 0L, 1L));
             accountRepository.save(account);
@@ -37,6 +38,26 @@ public class AccountController {
             log.info(account.getDetail().getAccount().getId());
         }
 
-        return account.getDetail();
+        return ResponseEntity.ok(account.getDetail());
+    }
+
+    @PostMapping(path = "/sync-detail", produces = "application/json")
+    public @ResponseBody
+    ResponseEntity syncDetail(@RequestHeader String androidId,
+                              @RequestBody AccountDetail accountDetail) {
+
+        Account account = accountRepository.findByAndroidId(androidId);
+
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        account.getDetail().setCoin(account.getDetail().getCoin() + accountDetail.getCoin());
+        account.getDetail().setGem(account.getDetail().getGem() + accountDetail.getGem());
+        account.getDetail().setXp(account.getDetail().getXp() + accountDetail.getXp());
+
+        account.getDetail().setLevel(accountDetail.getLevel());
+
+        return ResponseEntity.ok(account.getDetail());
     }
 }
