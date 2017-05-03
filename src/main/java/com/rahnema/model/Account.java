@@ -14,6 +14,9 @@ public class Account implements Serializable {
     @Column(name = "account_id")
     private Long id;
 
+    @Column(name = "account_detail")
+    private AccountDetail detail;
+
     @Column(name = "account_username")
     private String username;
 
@@ -43,6 +46,15 @@ public class Account implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    public AccountDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(AccountDetail detail) {
+        this.detail = detail;
     }
 
     public String getUsername() {

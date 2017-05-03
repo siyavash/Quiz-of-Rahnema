@@ -1,5 +1,7 @@
 package com.rahnema.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -26,6 +28,9 @@ public class AccountDetail implements Serializable {
     private int level;
 
     @Id
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    @JsonBackReference
     public Account getAccount() {
         return account;
     }
