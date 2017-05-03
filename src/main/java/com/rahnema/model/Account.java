@@ -39,9 +39,10 @@ public class Account implements Serializable {
 
     public Account() {}
 
-    public Account(String androidId) {
+    public Account(String androidId, AccountDetail detail) {
         this.androidId = androidId;
-        this.setDetail(new AccountDetail(100L, 0L, 0L, 1));
+        this.setDetail(detail);
+        detail.setAccount(this);
     }
 
     @Id
