@@ -37,6 +37,13 @@ public class Account implements Serializable {
     @Column(name = "account_last_name")
     private String lastName;
 
+    public Account() {}
+
+    public Account(String androidId) {
+        this.androidId = androidId;
+        this.setDetail(new AccountDetail(100L, 0L, 0L, 1));
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
