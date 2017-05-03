@@ -27,6 +27,15 @@ public class AccountDetail implements Serializable {
     @Column(name = "account_level")
     private int level;
 
+    AccountDetail() {}
+
+    AccountDetail(Long coin, Long gem, Long xp, int level) {
+        this.coin = coin;
+        this.gem = gem;
+        this.xp = xp;
+        this.level = level;
+    }
+
     @Id
     @OneToOne
     @JoinColumn(name = "account_id")
