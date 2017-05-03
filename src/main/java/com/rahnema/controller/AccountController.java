@@ -58,6 +58,8 @@ public class AccountController {
 
         account.getDetail().setLevel(accountDetail.getLevel());
 
+        accountRepository.save(account);
+
         return ResponseEntity.ok(account.getDetail());
     }
 }
