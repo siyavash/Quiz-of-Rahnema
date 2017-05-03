@@ -1,26 +1,42 @@
 package com.rahnema.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Created by siyavash on 5/3/2017.
  */
-public class Account {
 
+@Entity
+@Table(name = "account")
+public class Account implements Serializable {
+
+    @Column(name = "account_id")
     private Long id;
 
+    @Column(name = "account_username")
     private String username;
 
+    @Column(name = "account_password")
     private String password;
 
-    private String androidID;
+    @Column(name = "account_android_id")
+    private String androidId;
 
+    @Column(name = "account_email")
     private String email;
 
+    @Column(name = "account_phone_number")
     private int phoneNumber;
 
+    @Column(name = "account_first_name")
     private String firstName;
 
+    @Column(name = "account_last_name")
     private String lastName;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -45,12 +61,12 @@ public class Account {
         this.password = password;
     }
 
-    public String getAndroidID() {
-        return androidID;
+    public String getAndroidId() {
+        return androidId;
     }
 
-    public void setAndroidID(String androidID) {
-        this.androidID = androidID;
+    public void setAndroidId(String androidId) {
+        this.androidId = androidId;
     }
 
     public String getEmail() {
