@@ -1,28 +1,39 @@
 package com.rahnema.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by siyavash on 5/5/2017.
  */
+
+@Entity
+@Table(name = "question")
 public class Question implements Serializable {
 
-    Long Id;
+    @Column(name = "question_id")
+    private Long id;
 
+    @Column(name = "question_text")
     private String text;
 
+    @Column(name = "question_difficulty")
     private int difficulty;
 
+    @Column(name = "question_number_of_seen")
     private Long NumberOfSeen;
 
+    @Column(name = "question_correct_answer")
     private Long correctAnswer;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getText() {
