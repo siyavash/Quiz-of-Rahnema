@@ -1,16 +1,24 @@
 package com.rahnema.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by siyavash on 5/5/2017.
  */
+
+@Entity
+@Table(name = "category")
 public class Category implements Serializable {
 
+    @Column(name = "category_id")
     Long id;
 
+    @Column(name = "category_name")
     String name;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
