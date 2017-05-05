@@ -1,22 +1,33 @@
 package com.rahnema.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by siyavash on 5/5/2017.
  */
+
+@Entity
+@Table(name = "match_detail")
 public class MatchDetail implements Serializable {
 
+    @Column(name = "match_id")
     private int id;
 
+    @Column(name = "match_type")
     private int type;
 
+    @Column(name = "match_maximum_time")
     private int maximumTime;
 
+    @Column(name = "match_decreasing_time")
     private int decreasingTime;
 
+    @Column(name = "match_number_of_question")
     private int numberOfQuestion;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
