@@ -1,16 +1,25 @@
 package com.rahnema.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * Created by siyavash on 5/5/2017.
  */
+
+@Entity
+@Table(name = "option")
 public class Option implements Serializable {
 
+    @Column(name = "option_id")
     private Long id;
 
+    @Column(name = "option_text")
     private String text;
 
+    @Column(name = "option_number_of_hit")
     private Long NumberOfHit;
 
     Option() {}
