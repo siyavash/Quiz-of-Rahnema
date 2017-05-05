@@ -22,7 +22,7 @@ public class Option implements Serializable {
     @Column(name = "option_number_of_hit")
     private Long NumberOfHit;
 
-    Option() {}
+    public Option() {}
 
     public Long getId() {
         return id;
