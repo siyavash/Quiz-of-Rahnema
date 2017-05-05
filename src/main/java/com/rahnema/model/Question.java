@@ -26,6 +26,8 @@ public class Question implements Serializable {
     @Column(name = "question_correct_answer")
     private Long correctAnswer;
 
+    Question() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

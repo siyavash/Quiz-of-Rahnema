@@ -26,6 +26,8 @@ public class MatchDetail implements Serializable {
     @Column(name = "match_number_of_question")
     private int numberOfQuestion;
 
+    MatchDetail() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
