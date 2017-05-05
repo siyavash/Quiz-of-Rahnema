@@ -12,13 +12,13 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     @Column(name = "category_id")
-    Long id;
+    private Long id;
 
     @Column(name = "category_name")
-    String name;
+    private String name;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO )
     public Long getId() {
         return id;
     }
