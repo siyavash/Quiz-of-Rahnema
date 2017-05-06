@@ -17,6 +17,8 @@ public class Option implements Serializable {
     @Column(name = "option_text")
     private String text;
 
+    private Question question;
+
     @Column(name = "option_number_of_hit")
     private Long NumberOfHit;
 
@@ -38,6 +40,16 @@ public class Option implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "option_question")
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public Long getNumberOfHit() {

@@ -2,6 +2,7 @@ package com.rahnema.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by siyavash on 5/5/2017.
@@ -16,6 +17,9 @@ public class Question implements Serializable {
 
     @Column(name = "question_text")
     private String text;
+
+    @Column(name = "question_options")
+    private Set<Option> options;
 
     @Column(name = "question_difficulty")
     private int difficulty;
@@ -44,6 +48,15 @@ public class Question implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    public Set<Option> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<Option> options) {
+        this.options = options;
     }
 
     public int getDifficulty() {
