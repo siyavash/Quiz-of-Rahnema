@@ -1,5 +1,7 @@
 package com.rahnema.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -24,6 +26,11 @@ public class Option implements Serializable {
 
     public Option() {}
 
+    public Option(String text, Question question) {
+        this.text = text;
+        this.setQuestion(question);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
@@ -43,6 +50,7 @@ public class Option implements Serializable {
     }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "option_question")
     public Question getQuestion() {
         return question;
