@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by doost on 5/10/2017.
+ * Created by siyavash on 5/10/2017.
  */
 public class QuestionResponse implements Serializable {
 
