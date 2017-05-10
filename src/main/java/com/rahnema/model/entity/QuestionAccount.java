@@ -1,19 +1,27 @@
 package com.rahnema.model.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by siyavash on 5/10/2017.
  */
 
+@Entity
+@Table(name = "question_account")
 public class QuestionAccount implements Serializable {
 
+    @Column(name = "question_account_id")
     private Long id;
 
-    private Long questoinId;
+    @Column(name = "question_account_question_id")
+    private Long questionId;
 
+    @Column(name = "question_account_account_id")
     private Long accountId;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -22,12 +30,12 @@ public class QuestionAccount implements Serializable {
         this.id = id;
     }
 
-    public Long getQuestoinId() {
-        return questoinId;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestoinId(Long questoinId) {
-        this.questoinId = questoinId;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public Long getAccountId() {
