@@ -1,5 +1,7 @@
 package com.rahnema.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -20,6 +22,8 @@ public class Question implements Serializable {
 
     @Column(name = "question_options")
     private Set<Option> options;
+
+    private Category category;
 
     @Column(name = "question_difficulty")
     private int difficulty;
@@ -57,6 +61,17 @@ public class Question implements Serializable {
 
     public void setOptions(Set<Option> options) {
         this.options = options;
+    }
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "question_category")
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getDifficulty() {

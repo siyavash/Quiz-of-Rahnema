@@ -1,7 +1,10 @@
 package com.rahnema.model.entity;
 
+import jdk.nashorn.internal.runtime.QuotedStringTokenizer;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by siyavash on 5/5/2017.
@@ -16,6 +19,8 @@ public class Category implements Serializable {
 
     @Column(name = "category_name")
     private String name;
+
+    private List<Question> questions;
 
     public Category() {}
 
@@ -35,5 +40,14 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }
