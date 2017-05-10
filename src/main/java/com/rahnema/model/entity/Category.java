@@ -1,4 +1,4 @@
-package com.rahnema.model;
+package com.rahnema.model.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,16 +1,13 @@
 package com.rahnema.controller;
 
-import com.rahnema.model.Account;
-import com.rahnema.model.MatchDetail;
+import com.rahnema.model.entity.Account;
+import com.rahnema.model.entity.MatchDetail;
 import com.rahnema.repository.AccountRepository;
 import com.rahnema.repository.MatchDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by siyavash on 5/5/2017.

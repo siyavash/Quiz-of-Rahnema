@@ -1,6 +1,6 @@
 package com.rahnema.repository;
 
-import com.rahnema.model.Question;
+import com.rahnema.model.entity.Question;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

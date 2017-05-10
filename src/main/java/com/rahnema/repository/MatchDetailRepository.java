@@ -1,6 +1,6 @@
 package com.rahnema.repository;
 
-import com.rahnema.model.MatchDetail;
+import com.rahnema.model.entity.MatchDetail;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

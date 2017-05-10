@@ -1,6 +1,6 @@
 package com.rahnema.repository;
 
-import com.rahnema.model.Account;
+import com.rahnema.model.entity.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

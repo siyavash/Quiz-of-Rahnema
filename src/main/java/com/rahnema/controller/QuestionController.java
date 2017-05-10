@@ -1,8 +1,8 @@
 package com.rahnema.controller;
 
-import com.rahnema.model.Account;
-import com.rahnema.model.Option;
-import com.rahnema.model.Question;
+import com.rahnema.model.entity.Account;
+import com.rahnema.model.entity.Option;
+import com.rahnema.model.entity.Question;
 import com.rahnema.repository.AccountRepository;
 import com.rahnema.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +29,10 @@ public class QuestionController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity addQuestion(@RequestBody Question question) {
-        Set<Option> options = new HashSet(){{
-            for(Option option : question.getOptions()) {
-                add(new Option(option.getText(), question));
-            }
-        }};
-
-        question.setOptions(options);
+    ResponseEntity addQuestions(@RequestBody Question question) {
+        for(Option option : question.getOptions()) {
+            option.setQuestion(question);
+        }
 
         questionRepository.save(question);
 

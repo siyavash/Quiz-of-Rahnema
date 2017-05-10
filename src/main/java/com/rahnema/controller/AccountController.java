@@ -1,15 +1,13 @@
 package com.rahnema.controller;
 
-import com.rahnema.model.Account;
-import com.rahnema.model.AccountDetail;
+import com.rahnema.model.entity.Account;
+import com.rahnema.model.entity.AccountDetail;
 import com.rahnema.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
 
 /**
  * Created by siyavash on 5/3/2017.

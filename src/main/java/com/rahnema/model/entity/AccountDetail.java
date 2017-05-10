@@ -1,4 +1,4 @@
-package com.rahnema.model;
+package com.rahnema.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
