@@ -1,7 +1,15 @@
 package com.rahnema.model.entity;
 
+import com.rahnema.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by siyavash on 5/3/2017.
@@ -9,7 +17,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "account")
-public class Account implements Serializable {
+public class Account implements Serializable, UserDetailsService {
 
     @Column(name = "account_id")
     private Long id;
@@ -43,6 +51,25 @@ public class Account implements Serializable {
         this.androidId = androidId;
         this.setDetail(detail);
         detail.setAccount(this);
+    }
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Account account = accountRepository.findByUsername(username);
+        if(account == null) {
+            return null;
+        }
+
+        return new User(account.getUsername(),
+                account.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                new ArrayList< GrantedAuthority>());
     }
 
     @Id
