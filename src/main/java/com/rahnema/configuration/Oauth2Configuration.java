@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -34,5 +35,19 @@ public class Oauth2Configuration extends AuthorizationServerConfigurerAdapter {
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
 
+    }
+
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // @formatter:off
+        clients
+                .jdbc(dataSource)
+//                .withClient("siyavash")
+//                .authorizedGrantTypes("password", "refresh_token", "client_credentials", "authorization_code")
+//                .authorities("ROLE_USER")
+//                .scopes("read", "write")
+////                .resourceIds(RESOURCE_ID)
+//                .secret("12345621");
+        ;
     }
 }
