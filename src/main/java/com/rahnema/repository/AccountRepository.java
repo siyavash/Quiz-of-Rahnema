@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends CrudRepository <Account, Long> {
 
     Account findByAndroidId(String androidId);
+
+    Account findByUsername(String username);
 }
