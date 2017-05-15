@@ -5,6 +5,6 @@ package com.rahnema.exception;
  */
 public abstract class UnavailableAbstractException extends Exception {
     public UnavailableAbstractException(String error) {
-        super(error + " already exist.");
+        super(error + " already exists.");
     }
 }
