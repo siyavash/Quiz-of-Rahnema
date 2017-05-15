@@ -24,6 +24,11 @@ repositories {
 
 
 dependencies {
+	compile('org.apache.poi:poi:3.11')
+	compile('org.apache.poi:poi-ooxml:3.11')
+	compile('org.springframework:spring-oxm')
+	compile('org.springframework.batch:spring-batch-core')
+	compile("org.springframework.boot:spring-boot-starter-batch")
 	compile("org.springframework.boot:spring-boot-starter")
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
