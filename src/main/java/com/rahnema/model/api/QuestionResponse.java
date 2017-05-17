@@ -14,6 +14,17 @@ public class QuestionResponse implements Serializable {
 
     private List<Long> deleted;
 
+    public QuestionResponse() {}
+
+    public QuestionResponse(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public QuestionResponse(List<Question> questions, List<Long> deleted) {
+        this.questions = questions;
+        this.deleted = deleted;
+    }
+
     public List<Question> getQuestions() {
         return questions;
     }
