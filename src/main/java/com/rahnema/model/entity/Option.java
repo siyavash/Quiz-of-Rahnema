@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by siyavash on 5/5/2017.
@@ -23,6 +24,38 @@ public class Option implements Serializable {
 
     @Column(name = "option_number_of_hit")
     private Long NumberOfHit;
+
+    @Column(name = "option_created_at")
+    private Date created;
+
+    @Column(name = "option_updated_at")
+    private Date updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = updated = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
     public Option() {}
 

@@ -4,6 +4,7 @@ import jdk.nashorn.internal.runtime.QuotedStringTokenizer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +22,38 @@ public class Category implements Serializable {
     private String name;
 
     private List<Question> questions;
+
+    @Column(name = "category_created_at")
+    private Date created;
+
+    @Column(name = "category_updated_at")
+    private Date updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = updated = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
     public Category() {}
 

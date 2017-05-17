@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by siyavash on 5/3/2017.
@@ -46,6 +47,38 @@ public class Account implements Serializable, UserDetailsService {
 
     @Column(name = "account_last_name")
     private String lastName;
+
+    @Column(name = "account_created_at")
+    private Date created;
+
+    @Column(name = "account_updated_at")
+    private Date updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = updated = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
     public Account() {}
 

@@ -2,6 +2,7 @@ package com.rahnema.model.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by siyavash on 5/5/2017.
@@ -25,6 +26,38 @@ public class MatchDetail implements Serializable {
 
     @Column(name = "match_number_of_question")
     private int numberOfQuestion;
+
+    @Column(name = "match_detail_created_at")
+    private Date created;
+
+    @Column(name = "match_detail_updated_at")
+    private Date updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = updated = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
     public MatchDetail() {}
 

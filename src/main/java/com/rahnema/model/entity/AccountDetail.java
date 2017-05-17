@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by siyavash on 5/3/2017.
@@ -26,6 +27,22 @@ public class AccountDetail implements Serializable {
 
     @Column(name = "account_level")
     private Long level;
+
+    @Column(name = "account_detail_created_at")
+    private Date created;
+
+    @Column(name = "account_detail_updated_at")
+    private Date updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = updated = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
 
     public AccountDetail() {}
 
@@ -78,5 +95,21 @@ public class AccountDetail implements Serializable {
 
     public void setLevel(Long level) {
         this.level = level;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 }
