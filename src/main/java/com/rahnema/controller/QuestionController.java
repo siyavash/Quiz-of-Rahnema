@@ -1,10 +1,15 @@
 package com.rahnema.controller;
 
 import com.rahnema.exception.UsernameNotFoundException;
+import com.rahnema.model.api.QuestionRequest;
+import com.rahnema.model.api.QuestionResponse;
 import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.Option;
 import com.rahnema.model.entity.Question;
+import com.rahnema.model.entity.QuestionAccount;
 import com.rahnema.repository.AccountRepository;
+import com.rahnema.repository.OptionRepository;
+import com.rahnema.repository.QuestionAccountRepository;
 import com.rahnema.repository.QuestionRepository;
 import com.rahnema.utils.CustomQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +39,12 @@ public class QuestionController {
     private AccountRepository accountRepository;
 
     @Autowired
+    private QuestionAccountRepository questionAccountRepository;
+
+    @Autowired
+    private OptionRepository optionRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @PostMapping(path = "/add")
@@ -50,7 +61,8 @@ public class QuestionController {
 
     @PostMapping(path = "/get")
     public @ResponseBody
-    ResponseEntity getQuestions(@RequestHeader String androidId) throws UsernameNotFoundException {
+    ResponseEntity getQuestions(@RequestHeader String androidId,
+                                @RequestBody QuestionRequest syncQuestions) throws UsernameNotFoundException {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = user.getUsername();
 
@@ -60,19 +72,34 @@ public class QuestionController {
             throw new UsernameNotFoundException(username);
         }
 
+        for(Long id : syncQuestions.getSeenQuestions()) {
+            Question question = questionRepository.findOne(id);
+            question.setNumberOfSeen(question.getNumberOfSeen() + 1);
+
+            questionAccountRepository.save(new QuestionAccount(question.getId(), account.getId()));
+            questionRepository.save(question);
+        }
+
+        for(Long id : syncQuestions.getHitOptions()) {
+            Option option = optionRepository.findOne(id);
+            option.setNumberOfHit(option.getNumberOfHit() + 1);
+
+            optionRepository.save(option);
+        }
+
         //TODO static number
         int numberOfNewQuestions = 10;
 
         List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
-                                            new Object[] {account.getId(), numberOfNewQuestions},
-                                            (rs, rowNum) -> (rs.getLong("id")));
+                                                        new Object[] {account.getId(), numberOfNewQuestions},
+                                                        (rs, rowNum) -> (rs.getLong("id")));
         int numberOfRemainQuestions = numberOfNewQuestions - (int) min(0.8 * numberOfNewQuestions, newQuestionIds.size());
 
-        List<Long> remainQuestions = jdbcTemplate.query(CustomQuery.getDuplicateQuesions,
+        List<Long> remainQuestions = jdbcTemplate.query(CustomQuery.getDuplicateQuestions,
                                                         new Object[] {account.getId(), numberOfRemainQuestions},
                                                         (rs, rowNum) -> (rs.getLong("id")));
         newQuestionIds.addAll(remainQuestions);
 
-        return ResponseEntity.ok().body(questionRepository.findByInventoryIds(newQuestionIds));
+        return ResponseEntity.ok().body(new QuestionResponse(questionRepository.findByInventoryIds(newQuestionIds)));
     }
 }
