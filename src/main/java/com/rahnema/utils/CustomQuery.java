@@ -16,11 +16,14 @@ public final class CustomQuery {
             "ORDER BY rand() " +
             "LIMIT ?";
 
-    public static final String getDuplicateQuesions =
+    public static final String getDuplicateQuestions =
             "SELECT question_account.question_id " +
             "FROM question_account " +
             "WHERE account_id = ? " +
             "GROUP BY question_id " +
             "ORDER BY rand() " +
             "LIMIT ?";
+
+    public static final String getQuestionsById =
+            "select p from Question p where p.id in :ids";
 }

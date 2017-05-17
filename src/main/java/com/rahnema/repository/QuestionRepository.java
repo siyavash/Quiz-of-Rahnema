@@ -2,6 +2,7 @@ package com.rahnema.repository;
 
 import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.Question;
+import com.rahnema.utils.CustomQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,8 +18,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends CrudRepository<Question, Long> {
 
-    String sql = "select p from Question p where p.id in :ids";
-
-    @Query(sql)
+    @Query(CustomQuery.getQuestionsById)
     List<Question> findByInventoryIds(@Param("ids") List<Long> iterable);
 }
