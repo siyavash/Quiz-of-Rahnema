@@ -1,11 +1,15 @@
 package com.rahnema.controller;
 
+import com.rahnema.exception.UsernameNotFoundException;
 import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.MatchDetail;
 import com.rahnema.repository.AccountRepository;
 import com.rahnema.repository.MatchDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +37,14 @@ public class MatchController {
 
     @PostMapping(path = "/get")
     public @ResponseBody
-    ResponseEntity getMatch(@RequestHeader String androidId) {
-        Account account = accountRepository.findByAndroidId(androidId);
+    ResponseEntity getMatch(@RequestHeader String androidId) throws UsernameNotFoundException {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = user.getUsername();
+
+        Account account = accountRepository.findByUsername(username);
 
         if(account == null) {
-            return ResponseEntity.badRequest().body(null);
+            throw new UsernameNotFoundException(username);
         }
 
         return ResponseEntity.ok().body(matchDetailRepository.findAll());
