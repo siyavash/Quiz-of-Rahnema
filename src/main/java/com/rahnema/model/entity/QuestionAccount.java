@@ -20,6 +20,13 @@ public class QuestionAccount implements Serializable {
     @Column(name = "question_account_account_id")
     private Long accountId;
 
+    public QuestionAccount() {}
+
+    public QuestionAccount(Long questionId, Long accountId) {
+        this.questionId = questionId;
+        this.accountId = accountId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
