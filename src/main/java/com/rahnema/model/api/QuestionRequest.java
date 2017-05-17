@@ -8,16 +8,26 @@ import java.util.List;
  */
 public class QuestionRequest implements Serializable {
 
-    private List<Long> seen;
+    private List<Long> seenQuestions;
+
+    private List<Long> hitOptions;
 
     private List<Long> unseen;
 
-    public List<Long> getSeen() {
-        return seen;
+    public List<Long> getSeenQuestions() {
+        return seenQuestions;
     }
 
-    public void setSeen(List<Long> seen) {
-        this.seen = seen;
+    public void setSeenQuestions(List<Long> seenQuestions) {
+        this.seenQuestions = seenQuestions;
+    }
+
+    public List<Long> getHitOptions() {
+        return hitOptions;
+    }
+
+    public void setHitOptions(List<Long> hitOptions) {
+        this.hitOptions = hitOptions;
     }
 
     public List<Long> getUnseen() {
