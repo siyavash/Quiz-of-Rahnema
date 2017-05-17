@@ -1,6 +1,7 @@
 package com.rahnema.controller;
 
 import com.rahnema.exception.UsernameExistsException;
+import com.rahnema.exception.UsernameNotFoundException;
 import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.AccountDetail;
 import com.rahnema.repository.AccountRepository;
@@ -53,15 +54,16 @@ public class AccountController {
 
     @PostMapping(path = "/sync-detail", produces = "application/json")
     public @ResponseBody
-    ResponseEntity syncDetail(@RequestBody AccountDetail accountDetail) {
+    ResponseEntity syncDetail(@RequestBody AccountDetail accountDetail) throws UsernameNotFoundException {
 
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = user.getUsername();
 
-        Account account = accountRepository.findByUsername(user.getUsername());
+        Account account = accountRepository.findByUsername(username);
 
 
         if (account == null) {
-            return ResponseEntity.badRequest().body(null);
+            throw new UsernameNotFoundException(username);
         }
 
         account.getDetail().setCoin(account.getDetail().getCoin() + accountDetail.getCoin());
