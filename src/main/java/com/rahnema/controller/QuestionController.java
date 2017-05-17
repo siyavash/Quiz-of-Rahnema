@@ -6,6 +6,7 @@ import com.rahnema.model.entity.Option;
 import com.rahnema.model.entity.Question;
 import com.rahnema.repository.AccountRepository;
 import com.rahnema.repository.QuestionRepository;
+import com.rahnema.utils.CustomQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -62,30 +63,12 @@ public class QuestionController {
         //TODO static number
         int numberOfNewQuestions = 10;
 
-        String queryForNewQuestions =
-                "SELECT question.id " +
-                "FROM question " +
-                "WHERE question.id NOT IN (" +
-                    "SELECT question_account.question_id " +
-                    "FROM question_account " +
-                    "WHERE question_account.account_id = ?) " +
-                "ORDER BY rand() " +
-                "LIMIT ?";
-
-        List<Long> newQuestionIds = jdbcTemplate.query(queryForNewQuestions,
+        List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
                                             new Object[] {account.getId(), numberOfNewQuestions},
                                             (rs, rowNum) -> (rs.getLong("id")));
         int numberOfRemainQuestions = numberOfNewQuestions - (int) min(0.8 * numberOfNewQuestions, newQuestionIds.size());
 
-        String queryForDuplicateQuestions =
-                "SELECT question_account.question_id " +
-                "FROM question_account " +
-                "WHERE account_id = ? " +
-                "GROUP BY question_id " +
-                "ORDER BY rand() " +
-                "LIMIT ?";
-
-        List<Long> remainQuestions = jdbcTemplate.query(queryForDuplicateQuestions,
+        List<Long> remainQuestions = jdbcTemplate.query(CustomQuery.getDuplicateQuesions,
                                                         new Object[] {account.getId(), numberOfRemainQuestions},
                                                         (rs, rowNum) -> (rs.getLong("id")));
         newQuestionIds.addAll(remainQuestions);
