@@ -21,11 +21,25 @@ public class MatchDetail implements Serializable {
     @Column(name = "match_maximum_time")
     private int maximumTime;
 
-    @Column(name = "match_decreasing_time")
-    private int decreasingTime;
+    @Column(name = "match_increasing_time")
+    private int increasingTime;
 
     @Column(name = "match_number_of_question")
     private int numberOfQuestion;
+
+    @Column(name = "match_detail_gem_reward")
+    private int gemReward;
+
+    @Column(name = "match_detail_coin_reward")
+    private int coinReward;
+
+    @Column(name = "match_detail_xp_reward")
+    private int xpReward;
+
+    @Column(name = "match_detail_enter_coin")
+    private int enterCoin;
+
+    private int NumberOfCreate;
 
     @Column(name = "match_detail_created_at")
     private Date created;
@@ -87,12 +101,12 @@ public class MatchDetail implements Serializable {
         this.maximumTime = maximumTime;
     }
 
-    public int getDecreasingTime() {
-        return decreasingTime;
+    public int getIncreasingTime() {
+        return increasingTime;
     }
 
-    public void setDecreasingTime(int decreasingTime) {
-        this.decreasingTime = decreasingTime;
+    public void setIncreasingTime(int increasingTime) {
+        this.increasingTime = increasingTime;
     }
 
     public int getNumberOfQuestion() {
@@ -101,5 +115,45 @@ public class MatchDetail implements Serializable {
 
     public void setNumberOfQuestion(int numberOfQuestion) {
         this.numberOfQuestion = numberOfQuestion;
+    }
+
+    public int getGemReward() {
+        return gemReward;
+    }
+
+    public void setGemReward(int gemReward) {
+        this.gemReward = gemReward;
+    }
+
+    public int getCoinReward() {
+        return coinReward;
+    }
+
+    public void setCoinReward(int coinReward) {
+        this.coinReward = coinReward;
+    }
+
+    public int getXpReward() {
+        return xpReward;
+    }
+
+    public void setXpReward(int xpReward) {
+        this.xpReward = xpReward;
+    }
+
+    public int getEnterCoin() {
+        return enterCoin;
+    }
+
+    public void setEnterCoin(int enterCoin) {
+        this.enterCoin = enterCoin;
+    }
+
+    public int getNumberOfCreate() {
+        return NumberOfCreate;
+    }
+
+    public void setNumberOfCreate(int numberOfCreate) {
+        NumberOfCreate = numberOfCreate;
     }
 }
