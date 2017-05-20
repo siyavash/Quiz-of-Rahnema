@@ -1,5 +1,6 @@
 package com.rahnema.controller;
 
+import com.rahnema.exception.QuestionNotFoundException;
 import com.rahnema.exception.UsernameNotFoundException;
 import com.rahnema.model.api.QuestionRequest;
 import com.rahnema.model.api.QuestionResponse;
@@ -47,6 +48,8 @@ public class QuestionController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AccountController.class);
+
     @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity addQuestion(@RequestBody Question question) {
@@ -62,7 +65,8 @@ public class QuestionController {
     @PostMapping(path = "/get")
     public @ResponseBody
     ResponseEntity getQuestions(@RequestHeader String androidId,
-                                @RequestBody QuestionRequest syncQuestions) throws UsernameNotFoundException {
+                                @RequestBody QuestionRequest syncQuestions) throws UsernameNotFoundException,
+                                                                                    QuestionNotFoundException {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = user.getUsername();
 
@@ -73,22 +77,49 @@ public class QuestionController {
         }
 
         for(Long id : syncQuestions.getSeenQuestions()) {
-            Question question = questionRepository.findOne(id);
-            question.setNumberOfSeen(question.getNumberOfSeen() + 1);
+            try {
+                Question question = questionRepository.findById(id);
+                if(question.getNumberOfSeen() == null) {
+                    question.setNumberOfSeen(0L);
+                }
 
-            questionAccountRepository.save(new QuestionAccount(question.getId(), account.getId()));
-            questionRepository.save(question);
+                question.setNumberOfSeen(question.getNumberOfSeen() + 1);
+
+                log.info(id + "  ___");
+                questionAccountRepository.save(new QuestionAccount(question.getId(), account.getId()));
+                questionRepository.save(question);
+            }
+            catch (Exception e) {
+                throw new QuestionNotFoundException(id.toString());
+            }
+
         }
+
+        log.info("+++++++== after seen");
 
         for(Long id : syncQuestions.getHitOptions()) {
-            Option option = optionRepository.findOne(id);
-            option.setNumberOfHit(option.getNumberOfHit() + 1);
+            try {
+                Option option = optionRepository.findById(id);
 
-            optionRepository.save(option);
+                log.info("after creation");
+                if(option.getNumberOfHit() == null) {
+                    option.setNumberOfHit(0L);
+                }
+
+                option.setNumberOfHit(option.getNumberOfHit() + 1);
+
+                optionRepository.save(option);
+            }
+            catch (Exception e) {
+                throw new QuestionNotFoundException(id.toString());
+            }
         }
 
+        log.info("++++++++++++++ here");
+
         //TODO static number
-        int numberOfNewQuestions = 10;
+        int numberOfNewQuestions = 20 - syncQuestions.getUnseen().size();
+        log.info("#################### " + numberOfNewQuestions);
 
         List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
                                                         new Object[] {account.getId(), numberOfNewQuestions},
@@ -97,7 +128,7 @@ public class QuestionController {
 
         List<Long> remainQuestions = jdbcTemplate.query(CustomQuery.getDuplicateQuestions,
                                                         new Object[] {account.getId(), numberOfRemainQuestions},
-                                                        (rs, rowNum) -> (rs.getLong("id")));
+                                                        (rs, rowNum) -> (rs.getLong("question_id")));
         newQuestionIds.addAll(remainQuestions);
 
         return ResponseEntity.ok().body(new QuestionResponse(questionRepository.findByInventoryIds(newQuestionIds)));
