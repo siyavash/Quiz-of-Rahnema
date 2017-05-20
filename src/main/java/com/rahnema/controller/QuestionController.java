@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.min;
@@ -78,7 +79,7 @@ public class QuestionController {
 
         for(Long id : syncQuestions.getSeenQuestions()) {
             try {
-                Question question = questionRepository.findById(id);
+                Question question = questionRepository.findOne(id);
                 if(question.getNumberOfSeen() == null) {
                     question.setNumberOfSeen(0L);
                 }
@@ -99,7 +100,7 @@ public class QuestionController {
 
         for(Long id : syncQuestions.getHitOptions()) {
             try {
-                Option option = optionRepository.findById(id);
+                Option option = optionRepository.findOne(id);
 
                 log.info("after creation");
                 if(option.getNumberOfHit() == null) {
@@ -118,8 +119,12 @@ public class QuestionController {
         log.info("++++++++++++++ here");
 
         //TODO static number
-        int numberOfNewQuestions = 20 - syncQuestions.getUnseen().size();
+        int numberOfNewQuestions = 500 - syncQuestions.getUnseen().size();
         log.info("#################### " + numberOfNewQuestions);
+
+        if(numberOfNewQuestions <= 0) {
+            return ResponseEntity.ok().body(new QuestionResponse(new ArrayList<Question>(), new ArrayList<Long>()));
+        }
 
         List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
                                                         new Object[] {account.getId(), numberOfNewQuestions},
