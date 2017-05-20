@@ -42,6 +42,7 @@ public class AccountController {
             throw new UsernameExistsException(username);
         }
 
+        //TODO static numbers
         account = new Account(androidId, new AccountDetail(100L, 0L, 0L, 1L));
         account.setUsername(username);
         account.setPassword(password);
@@ -52,7 +53,7 @@ public class AccountController {
         return ResponseEntity.ok(account.getDetail());
     }
 
-    @PostMapping(path = "/sync-detail", produces = "application/json")
+    @PostMapping(path = "/sync-detail")
     public @ResponseBody
     ResponseEntity syncDetail(@RequestBody AccountDetail accountDetail) throws UsernameNotFoundException {
 
@@ -75,5 +76,20 @@ public class AccountController {
         accountRepository.save(account);
 
         return ResponseEntity.ok(account.getDetail());
+    }
+
+    @PostMapping(path = "/get")
+    public @ResponseBody
+    ResponseEntity getAccount() throws UsernameNotFoundException {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = user.getUsername();
+
+        Account account = accountRepository.findByUsername(username);
+
+        if(account == null) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        return ResponseEntity.ok().body(account);
     }
 }
