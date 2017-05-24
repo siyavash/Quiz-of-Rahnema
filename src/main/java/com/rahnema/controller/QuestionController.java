@@ -1,5 +1,6 @@
 package com.rahnema.controller;
 
+import com.rahnema.exception.OptionNotFoundException;
 import com.rahnema.exception.QuestionNotFoundException;
 import com.rahnema.exception.UsernameNotFoundException;
 import com.rahnema.model.api.QuestionRequest;
@@ -63,15 +64,19 @@ public class QuestionController {
         return ResponseEntity.accepted().body(question);
     }
 
-    @PostMapping(path = "/get")
+    @PostMapping(path = "/get/{category}")
     public @ResponseBody
     ResponseEntity getQuestions(@RequestHeader String androidId,
+                                @PathVariable String category,
                                 @RequestBody QuestionRequest syncQuestions) throws UsernameNotFoundException,
-                                                                                    QuestionNotFoundException {
+                                                                                    QuestionNotFoundException,
+                                                                                    OptionNotFoundException {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = user.getUsername();
 
         Account account = accountRepository.findByUsername(username);
+
+        log.info(category);
 
         if(account == null) {
             throw new UsernameNotFoundException(username);
@@ -112,14 +117,14 @@ public class QuestionController {
                 optionRepository.save(option);
             }
             catch (Exception e) {
-                throw new QuestionNotFoundException(id.toString());
+                throw new OptionNotFoundException(id.toString());
             }
         }
 
         log.info("++++++++++++++ here");
 
         //TODO static number
-        int numberOfNewQuestions = 500 - syncQuestions.getUnseen().size();
+        int numberOfNewQuestions = 20 - syncQuestions.getUnseen().size();
         log.info("#################### " + numberOfNewQuestions);
 
         if(numberOfNewQuestions <= 0) {
