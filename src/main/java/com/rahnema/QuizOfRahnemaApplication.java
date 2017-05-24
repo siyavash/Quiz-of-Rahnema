@@ -48,59 +48,18 @@ public class QuizOfRahnemaApplication implements CommandLineRunner {
 	}
 
 	private String cleanText(String text) {
-		while('0' <= text.charAt(0) && text.charAt(0) <= '9') {
-			text = text.substring(1);
-		}
-		while(text.charAt(0) == '.' || text.charAt(0) == ' ') {
+		while(('0' <= text.charAt(0) && text.charAt(0) <= '9') || text.charAt(0) == '.' || text.charAt(0) == ' ') {
 			text = text.substring(1);
 		}
 
+        while(('0' <= text.charAt(text.length() - 1) && text.charAt(text.length() - 1) <= '9') || text.charAt(text.length() - 1) == '.' || text.charAt(text.length() - 1) == ' ') {
+            text = text.substring(0, text.length() - 1);
+        }
 		return text;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-//		ClassLoader classLoader = QuizOfRahnemaApplication.class.getClassLoader();
-//		String excelFilePath = "music.xlsx";
-//		FileInputStream inputStream = new FileInputStream(new File(classLoader.getResource(excelFilePath).getFile()));
-//
-//		Workbook workbook = new XSSFWorkbook(inputStream);
-//		Sheet sheet = workbook.getSheetAt(0);
-//
-//		Iterator iterator = sheet.iterator();
-//
-//		while (iterator.hasNext()) {
-//			Row nextRow = (Row) iterator.next();
-//			if (nextRow.getRowNum() == 0)
-//				continue;
-//
-//			Iterator cellIterator = nextRow.cellIterator();
-//
-//			Question question = new Question();
-//			String value = "";
-//			long corAns = -1;
-//
-//			while (cellIterator.hasNext()) {
-//				Cell cell = (Cell) cellIterator.next();
-//				if(cell == null) {
-//					log.info("wtf");
-//				}
-//				int columnIndex = cell.getColumnIndex();
-//				switch (columnIndex + 1) {
-//					case 1: {
-//						//countryObj.setName(cell.getStringCellValue());
-//						value = cell.getStringCellValue();
-//						log.info("soal " + value);
-//						break;
-//					}
-//					case 2: {
-//						//countryObj.setCapital(cell.getStringCellValue());
-//						corAns = (long) cell.getNumericCellValue();
-//						log.info("shomare javab " + corAns);
-//						break;
-//					}
-//				}
-//			}
 //			Scanner scanner = new Scanner(value);
 //
 //
@@ -133,10 +92,6 @@ public class QuizOfRahnemaApplication implements CommandLineRunner {
 //				}
 //			}
 //			scanner.close();
-//		}
-//
-//		workbook.close();
-//		inputStream.close();
 	}
 
 }
