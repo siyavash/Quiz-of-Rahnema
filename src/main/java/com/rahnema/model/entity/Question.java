@@ -1,6 +1,7 @@
 package com.rahnema.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.rahnema.model.AbstractTimestampEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "question")
-public class Question implements Serializable {
+public class Question extends AbstractTimestampEntity implements Serializable {
 
     @Column(name = "question_id")
     private Long id;
@@ -34,38 +35,6 @@ public class Question implements Serializable {
 
     @Column(name = "question_correct_answer")
     private Long correctAnswer;
-
-    @Column(name = "question_created_at")
-    private Date created;
-
-    @Column(name = "question_updated_at")
-    private Date updated;
-
-    @PrePersist
-    protected void onCreate() {
-        created = updated = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updated = new Date();
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
 
     public Question() {}
 

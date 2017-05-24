@@ -1,5 +1,6 @@
 package com.rahnema.model.entity;
 
+import com.rahnema.model.AbstractTimestampEntity;
 import jdk.nashorn.internal.runtime.QuotedStringTokenizer;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "category")
-public class Category implements Serializable {
+public class Category extends AbstractTimestampEntity implements Serializable {
 
     @Column(name = "category_id")
     private Long id;
@@ -22,38 +23,6 @@ public class Category implements Serializable {
     private String name;
 
     private List<Question> questions;
-
-    @Column(name = "category_created_at")
-    private Date created;
-
-    @Column(name = "category_updated_at")
-    private Date updated;
-
-    @PrePersist
-    protected void onCreate() {
-        created = updated = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updated = new Date();
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
 
     public Category() {}
 
