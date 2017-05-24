@@ -12,7 +12,8 @@ public final class CustomQuery {
             "WHERE question.id NOT IN (" +
                 "SELECT question_account.question_id " +
                 "FROM question_account " +
-                "WHERE question_account.account_id = ?) " +
+                "WHERE question_account.account_id = ? " +
+                "GROUP BY question_id) " +
             "ORDER BY rand() " +
             "LIMIT ?";
 
