@@ -58,6 +58,13 @@ public class QuestionController {
     public @ResponseBody
     ResponseEntity addQuestion(@RequestBody Question question) throws CategoryNotFoundException {
 
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = user.getUsername();
+
+        if(! username.equals("admin")) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         if(question.getCategory() != null && categoryRepository.findByName(question.getCategory().getName()) != null) {
             throw new CategoryNotFoundException(question.getCategory().getName());
         }
