@@ -14,6 +14,7 @@ import com.rahnema.repository.OptionRepository;
 import com.rahnema.repository.QuestionAccountRepository;
 import com.rahnema.repository.QuestionRepository;
 import com.rahnema.utils.CustomQuery;
+import com.rahnema.utils.GameConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -123,8 +124,7 @@ public class QuestionController {
 
         log.info("++++++++++++++ here");
 
-        //TODO static number
-        int numberOfNewQuestions = 20 - syncQuestions.getUnseen().size();
+        int numberOfNewQuestions = GameConfig.numberOfFreshQuestions - syncQuestions.getUnseen().size();
         log.info("#################### " + numberOfNewQuestions);
 
         if(numberOfNewQuestions <= 0) {

@@ -5,6 +5,7 @@ import com.rahnema.exception.UsernameNotFoundException;
 import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.AccountDetail;
 import com.rahnema.repository.AccountRepository;
+import com.rahnema.utils.GameConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,10 @@ public class AccountController {
             throw new UsernameExistsException(username);
         }
 
-        //TODO static numbers
-        account = new Account(androidId, new AccountDetail(100L, 0L, 0L, 1L));
+        account = new Account(androidId, new AccountDetail(GameConfig.baseCoin,
+                                                           GameConfig.baseGem,
+                                                           GameConfig.baseXp,
+                                                           GameConfig.baseLevel));
         account.setUsername(username);
         account.setPassword(password);
         accountRepository.save(account);
