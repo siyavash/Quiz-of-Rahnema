@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CategoryController {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @PostMapping(path = "/add")
     public @ResponseBody
