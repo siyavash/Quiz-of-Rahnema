@@ -13,6 +13,9 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class AbstractTimestampEntity {
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @Column(name = "created", nullable = false)
     private Date created;
 
@@ -22,11 +25,20 @@ public abstract class AbstractTimestampEntity {
     @PrePersist
     protected void onCreate() {
         updated = created = new Date();
+        deleted = false;
     }
 
     @PreUpdate
     protected void onUpdate() {
         updated = new Date();
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Date getCreated() {
