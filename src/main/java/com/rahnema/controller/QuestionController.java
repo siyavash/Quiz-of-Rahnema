@@ -78,13 +78,19 @@ public class QuestionController {
         return ResponseEntity.accepted().body(question);
     }
 
-    @PostMapping(path = "/get/{category}")
+    @PostMapping(path = "/get")
     public @ResponseBody
     ResponseEntity getQuestions(@RequestHeader String androidId,
-                                @PathVariable String category,
+                                @RequestParam(name = "category", defaultValue = "") String category,
                                 @RequestBody QuestionRequest syncQuestions) throws UsernameNotFoundException,
                                                                                     QuestionNotFoundException,
-                                                                                    OptionNotFoundException {
+                                                                                    OptionNotFoundException,
+                                                                                    CategoryNotFoundException {
+        if(categoryRepository.findByName(category) == null) {
+            throw new CategoryNotFoundException(category);
+        }
+        log.info("_____________ category " + category);
+
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = user.getUsername();
 
