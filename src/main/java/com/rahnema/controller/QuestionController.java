@@ -86,7 +86,7 @@ public class QuestionController {
                                                                                     QuestionNotFoundException,
                                                                                     OptionNotFoundException,
                                                                                     CategoryNotFoundException {
-        if(categoryRepository.findByName(category) == null) {
+        if(! category.equals("") && categoryRepository.findByName(category) == null) {
             throw new CategoryNotFoundException(category);
         }
         log.info("_____________ category " + category);
@@ -102,6 +102,7 @@ public class QuestionController {
             throw new UsernameNotFoundException(username);
         }
 
+        // sync detail from client
         for(Long id : syncQuestions.getSeenQuestions()) {
             try {
                 Question question = questionRepository.findOne(id);
@@ -140,6 +141,7 @@ public class QuestionController {
                 throw new OptionNotFoundException(id.toString());
             }
         }
+        //end of sync
 
         log.info("++++++++++++++ here");
 
@@ -151,7 +153,7 @@ public class QuestionController {
         }
 
         List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
-                                                        new Object[] {account.getId(), numberOfNewQuestions},
+                                                        new Object[] {account.getId(), numberOfNewQuestions, 1},
                                                         (rs, rowNum) -> (rs.getLong("id")));
         int numberOfRemainQuestions = numberOfNewQuestions - (int) min(0.8 * numberOfNewQuestions, newQuestionIds.size());
 
