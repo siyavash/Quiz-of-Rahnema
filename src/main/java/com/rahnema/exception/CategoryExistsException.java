@@ -1,7 +1,7 @@
 package com.rahnema.exception;
 
 /**
- * Created by doost on 5/27/2017.
+ * Created by siyavash on 5/27/2017.
  */
 public class CategoryExistsException extends UnavailableAbstractException {
 
