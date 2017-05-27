@@ -1,11 +1,9 @@
 package com.rahnema.model.entity;
 
-import com.rahnema.model.AbstractTimestampEntity;
-import jdk.nashorn.internal.runtime.QuotedStringTokenizer;
+import com.rahnema.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "category")
-public class Category extends AbstractTimestampEntity implements Serializable {
+public class Category extends AbstractBaseEntity implements Serializable {
 
     @Column(name = "category_id")
     private Long id;

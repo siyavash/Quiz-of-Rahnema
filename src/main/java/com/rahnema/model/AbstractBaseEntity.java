@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 @MappedSuperclass
-public abstract class AbstractTimestampEntity {
+public abstract class AbstractBaseEntity {
 
     @Column(name = "deleted")
     private boolean deleted;

@@ -1,10 +1,9 @@
 package com.rahnema.model.entity;
 
-import com.rahnema.model.AbstractTimestampEntity;
+import com.rahnema.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by siyavash on 5/10/2017.
@@ -12,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "question_account")
-public class QuestionAccount extends AbstractTimestampEntity implements Serializable {
+public class QuestionAccount extends AbstractBaseEntity implements Serializable {
 
     @Column(name = "question_account_id")
     private Long id;

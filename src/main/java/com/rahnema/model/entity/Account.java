@@ -1,6 +1,6 @@
 package com.rahnema.model.entity;
 
-import com.rahnema.model.AbstractTimestampEntity;
+import com.rahnema.model.AbstractBaseEntity;
 import com.rahnema.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by siyavash on 5/3/2017.
@@ -21,7 +20,7 @@ import java.util.Date;
 @Entity
 @Table(name = "account")
 @Component
-public class Account extends AbstractTimestampEntity implements Serializable, UserDetailsService {
+public class Account extends AbstractBaseEntity implements Serializable, UserDetailsService {
 
     @Column(name = "account_id")
     private Long id;

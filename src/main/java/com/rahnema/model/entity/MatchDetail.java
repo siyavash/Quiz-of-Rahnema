@@ -1,10 +1,9 @@
 package com.rahnema.model.entity;
 
-import com.rahnema.model.AbstractTimestampEntity;
+import com.rahnema.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by siyavash on 5/5/2017.
@@ -12,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "match_detail")
-public class MatchDetail extends AbstractTimestampEntity implements Serializable {
+public class MatchDetail extends AbstractBaseEntity implements Serializable {
 
     @Column(name = "match_id")
     private int id;

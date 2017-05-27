@@ -1,11 +1,10 @@
 package com.rahnema.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.rahnema.model.AbstractTimestampEntity;
+import com.rahnema.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "question")
-public class Question extends AbstractTimestampEntity implements Serializable {
+public class Question extends AbstractBaseEntity implements Serializable {
 
     @Column(name = "question_id")
     private Long id;
