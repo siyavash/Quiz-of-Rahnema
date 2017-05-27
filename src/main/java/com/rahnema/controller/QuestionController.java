@@ -1,5 +1,6 @@
 package com.rahnema.controller;
 
+import com.rahnema.exception.CategoryNotFoundException;
 import com.rahnema.exception.OptionNotFoundException;
 import com.rahnema.exception.QuestionNotFoundException;
 import com.rahnema.exception.UsernameNotFoundException;
@@ -9,10 +10,7 @@ import com.rahnema.model.entity.Account;
 import com.rahnema.model.entity.Option;
 import com.rahnema.model.entity.Question;
 import com.rahnema.model.entity.QuestionAccount;
-import com.rahnema.repository.AccountRepository;
-import com.rahnema.repository.OptionRepository;
-import com.rahnema.repository.QuestionAccountRepository;
-import com.rahnema.repository.QuestionRepository;
+import com.rahnema.repository.*;
 import com.rahnema.utils.CustomQuery;
 import com.rahnema.utils.GameConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +47,21 @@ public class QuestionController {
     private OptionRepository optionRepository;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AccountController.class);
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity addQuestion(@RequestBody Question question) {
+    ResponseEntity addQuestion(@RequestBody Question question) throws CategoryNotFoundException {
+
+        if(question.getCategory() != null && categoryRepository.findByName(question.getCategory().getName()) != null) {
+            throw new CategoryNotFoundException(question.getCategory().getName());
+        }
+
         for(Option option : question.getOptions()) {
             option.setQuestion(question);
         }
