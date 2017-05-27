@@ -2,12 +2,10 @@ package com.rahnema.controller;
 
 import com.rahnema.exception.CategoryExistsException;
 import com.rahnema.model.entity.Category;
-import com.rahnema.repository.AccountRepository;
 import com.rahnema.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(path = "/category")
 public class CategoryController {
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;

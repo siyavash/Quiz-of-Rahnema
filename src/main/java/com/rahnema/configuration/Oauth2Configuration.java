@@ -40,7 +40,6 @@ public class Oauth2Configuration extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // @formatter:off
         clients
                 .jdbc(dataSource)
 //                .withClient("siyavash")
