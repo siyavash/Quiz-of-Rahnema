@@ -153,7 +153,7 @@ public class QuestionController {
         }
 
         List<Long> newQuestionIds = jdbcTemplate.query(CustomQuery.getNewQuestions,
-                                                        new Object[] {account.getId(), numberOfNewQuestions, 1},
+                                                        new Object[] {account.getId(), numberOfNewQuestions},
                                                         (rs, rowNum) -> (rs.getLong("id")));
         int numberOfRemainQuestions = numberOfNewQuestions - (int) min(0.8 * numberOfNewQuestions, newQuestionIds.size());
 
